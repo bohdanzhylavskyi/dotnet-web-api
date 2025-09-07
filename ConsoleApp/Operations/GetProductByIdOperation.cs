@@ -20,7 +20,7 @@ namespace ConsoleApp.Operations
 
         public async Task Execute()
         {
-            var productId = ConsoleUtils.PromptNumericInput("Enter id of product to retrieve:");
+            var productId = ConsoleUtils.PromptNumericInput("Enter Product Id:");
 
             if (productId == null)
             {

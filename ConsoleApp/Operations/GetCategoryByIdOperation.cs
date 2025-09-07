@@ -20,7 +20,7 @@ namespace ConsoleApp.Operations
 
         public async Task Execute()
         {
-            var categoryId = ConsoleUtils.PromptNumericInput("Enter id of category to retrieve:");
+            var categoryId = ConsoleUtils.PromptNumericInput("Enter Category Id:");
 
             if (categoryId == null)
             {

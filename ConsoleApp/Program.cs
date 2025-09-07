@@ -5,15 +5,13 @@ namespace ConsoleApp
 {
    internal class Program
     {
-        static string ServerBaseUrl = ResolveBaseUrl();
-
         static IOperation[] Operations;
 
         static async Task Main(string[] args)
         {
             using var httpClient = new HttpClient()
             {
-                BaseAddress = new Uri(ServerBaseUrl)
+                BaseAddress = new Uri(ResolveServerBaseUrl())
             };
 
             Operations = new IOperation[] {
@@ -35,17 +33,15 @@ namespace ConsoleApp
             {
                 PrintMenu(Operations);
 
-                string? input = Console.ReadLine();
+                var operationIndex = ConsoleUtils.PromptNumericInput("Enter Operation Index: ");
 
-                int.TryParse(input, out int parsedInput);
-
-                if (parsedInput == null || parsedInput < 0 || parsedInput > Operations.Length )
+                if (operationIndex == null || operationIndex < 0 || operationIndex > Operations.Length )
                 {
                     Console.WriteLine("Invalid input \n\n");
                     continue;
                 }
 
-                var selectedOperation = Operations[parsedInput];
+                var selectedOperation = Operations[(int) operationIndex];
 
                 try
                 {
@@ -69,7 +65,7 @@ namespace ConsoleApp
             Console.WriteLine("##########################################\n");
         }
 
-        private static string ResolveBaseUrl()
+        private static string ResolveServerBaseUrl()
         {
             var folder = Directory.GetCurrentDirectory();
 

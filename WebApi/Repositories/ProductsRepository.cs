@@ -98,9 +98,9 @@ namespace WebApi.Repositories
                     "ORDER BY ProductID " +                    "OFFSET (@PageNumber - 1) * @PageSize ROWS " +
                     "FETCH NEXT @PageSize ROWS ONLY;",
                     new {
-                        CategoryID = filters?.CategoryID,
-                        PageNumber = pagination.PageNumber,
-                        PageSize = pagination.PageSize
+                        filters?.CategoryID,
+                        pagination.PageNumber,
+                        pagination.PageSize
                     }
                 ).ToList();
             }

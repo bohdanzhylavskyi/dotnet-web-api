@@ -20,7 +20,7 @@ namespace ConsoleApp.Operations
 
         public async Task Execute()
         {
-            var categoryId = ConsoleUtils.PromptNumericInput("Category Id (Optional):");
+            var categoryId = ConsoleUtils.PromptNumericInput("Category Id Filter (Optional):");
             var pageNumber = ConsoleUtils.PromptNumericInput("Page Number (Optional):");
             var pageSize = ConsoleUtils.PromptNumericInput("Page Size (Optional):");
 
