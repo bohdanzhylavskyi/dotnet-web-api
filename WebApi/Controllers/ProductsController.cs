@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using WebApi.DTOs;
 using WebApi.Entities;
 using WebApi.Repositories;
+using WebApi.Shared;
 
 namespace WebApi.Controllers
 {

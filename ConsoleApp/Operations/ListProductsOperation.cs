@@ -1,16 +1,14 @@
-﻿using System.Net.Http.Json;
-using System.Text.Json;
-using WebApi.Entities;
+﻿using System.Text.Json;
 
 namespace ConsoleApp.Operations
 {
     public class ListProductsOperation: IOperation
     {
-        private HttpClient httpClient;
+        private ApiClient apiClient;
 
-        public ListProductsOperation(HttpClient httpClient)
+        public ListProductsOperation(ApiClient apiClient)
         {
-            this.httpClient = httpClient;
+            this.apiClient = apiClient;
         }
 
         public string GetName()
@@ -24,7 +22,7 @@ namespace ConsoleApp.Operations
             var pageNumber = ConsoleUtils.PromptNumericInput("Page Number (Optional):");
             var pageSize = ConsoleUtils.PromptNumericInput("Page Size (Optional):");
 
-            var products = await GetProductsList(categoryId, pageNumber, pageSize);
+            var products = await this.apiClient.GetProductsListAsync(categoryId, pageNumber, pageSize);
 
             Console.WriteLine("\nResult:");
             Console.WriteLine(
@@ -32,30 +30,6 @@ namespace ConsoleApp.Operations
             );
         }
 
-        private async Task<List<Product>> GetProductsList(int? categoryId, int? pageNumber, int? pageSize)
-        {
-            var query = new Dictionary<string, string>();
-
-            if (categoryId != null)
-            {
-                query.Add("categoryId", categoryId.ToString());
-            }
-
-            if (pageNumber != null)
-            {
-                query.Add("pageNumber", pageNumber.ToString());
-            }
-
-            if (pageSize != null)
-            {
-                query.Add("pageSize", pageSize.ToString());
-            }
-
-            string queryStr = UrlHelper.QueryParamsToString(query);
-
-            Console.WriteLine(queryStr);
-
-            return await this.httpClient.GetFromJsonAsync<List<Product>>($"products?{queryStr}");
-        }
+        
     }
 }

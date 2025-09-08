@@ -1,16 +1,15 @@
 ﻿using ConsoleApp.DTOs;
-using System.Net.Http.Json;
 using System.Text.Json;
 
 namespace ConsoleApp.Operations
 {
     public class UpdateCategoryOperation: IOperation
     {
-        private HttpClient httpClient;
+        private ApiClient apiClient;
 
-        public UpdateCategoryOperation(HttpClient httpClient)
+        public UpdateCategoryOperation(ApiClient apiClient)
         {
-            this.httpClient = httpClient;
+            this.apiClient = apiClient;
         }
 
         public string GetName()
@@ -42,14 +41,9 @@ namespace ConsoleApp.Operations
 
             var dto = JsonSerializer.Deserialize<UpdateCategoryDTO>(input);
 
-            await UpdateCategory((int) categoryId, dto);
+            await this.apiClient.UpdateCategoryAsync((int) categoryId, dto);
 
             Console.WriteLine($"\nCategory was updated");
-        }
-
-        private async Task UpdateCategory(int categoryId, UpdateCategoryDTO dto)
-        {
-            await this.httpClient.PutAsJsonAsync($"categories/{categoryId}", dto);
         }
     }
 }

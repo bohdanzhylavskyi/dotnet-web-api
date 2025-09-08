@@ -1,16 +1,14 @@
-﻿using System.Net.Http.Json;
-using System.Text.Json;
-using WebApi.Entities;
+﻿using System.Text.Json;
 
 namespace ConsoleApp.Operations
 {
     public class GetProductByIdOperation: IOperation
     {
-        private HttpClient httpClient;
+        private ApiClient apiClient;
 
-        public GetProductByIdOperation(HttpClient httpClient)
+        public GetProductByIdOperation(ApiClient apiClient)
         {
-            this.httpClient = httpClient;
+            this.apiClient = apiClient;
         }
 
         public string GetName()
@@ -28,14 +26,9 @@ namespace ConsoleApp.Operations
                 return;
             }
 
-            var product = await GetProductById((int) productId);
+            var product = await this.apiClient.GetProductByIdAsync((int) productId);
 
             Console.WriteLine($"\nResult: {JsonSerializer.Serialize(product)}");
-        }
-
-        private async Task<Product> GetProductById(int id)
-        {
-            return await this.httpClient.GetFromJsonAsync<Product>($"products/{id}");
         }
     }
 }

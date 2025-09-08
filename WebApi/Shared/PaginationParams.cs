@@ -1,4 +1,4 @@
-﻿namespace WebApi.Repositories
+﻿namespace WebApi.Shared
 {
     public class PaginationParams
     {

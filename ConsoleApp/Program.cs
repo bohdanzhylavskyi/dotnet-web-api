@@ -14,13 +14,16 @@ namespace ConsoleApp
                 BaseAddress = new Uri(ResolveServerBaseUrl())
             };
 
+            var apiClient = new ApiClient(httpClient);
+
             Operations = new IOperation[] {
-                new ListCategoriesOperation(httpClient),
-                new ListProductsOperation(httpClient),
-                new GetCategoryByIdOperation(httpClient),
-                new GetProductByIdOperation(httpClient),
-                new CreateCategoryOperation(httpClient),
-                new UpdateCategoryOperation(httpClient),
+                new ListCategoriesOperation(apiClient),
+                new ListProductsOperation(apiClient),
+                new GetCategoryByIdOperation(apiClient),
+                new GetProductByIdOperation(apiClient),
+                new CreateCategoryOperation(apiClient),
+                new UpdateCategoryOperation(apiClient),
+                new DeleteCategoryByIdOperation(apiClient),
             };
 
 

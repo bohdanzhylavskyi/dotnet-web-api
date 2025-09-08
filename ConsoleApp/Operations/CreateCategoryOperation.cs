@@ -1,17 +1,15 @@
 ﻿using ConsoleApp.DTOs;
-using System.Net.Http.Json;
 using System.Text.Json;
-using WebApi.Entities;
 
 namespace ConsoleApp.Operations
 {
     public class CreateCategoryOperation: IOperation
     {
-        private HttpClient httpClient;
+        private ApiClient apiClient;
 
-        public CreateCategoryOperation(HttpClient httpClient)
+        public CreateCategoryOperation(ApiClient apiClient)
         {
-            this.httpClient = httpClient;
+            this.apiClient = apiClient;
         }
 
         public string GetName()
@@ -33,17 +31,11 @@ namespace ConsoleApp.Operations
 
             var dto = JsonSerializer.Deserialize<CreateCategoryDTO>(input);
 
-            var createdCategory = await CreateCategory(dto);
+            var createdCategory = await this.apiClient.CreateCategoryAsync(dto);
 
             Console.WriteLine($"\nResult: {JsonSerializer.Serialize(createdCategory)}");
         }
 
-        private async Task<Category> CreateCategory(CreateCategoryDTO dto)
-        {
-            var response = await this.httpClient.PostAsJsonAsync($"categories", dto);
-            var createdCategory = await response.Content.ReadFromJsonAsync<Category>();
-
-            return createdCategory;
-        }
+        
     }
 }

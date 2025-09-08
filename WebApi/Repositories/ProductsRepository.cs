@@ -2,6 +2,7 @@
 using System.Data.SqlClient;
 using WebApi.Configurations;
 using WebApi.Entities;
+using WebApi.Shared;
 
 namespace WebApi.Repositories
 {
@@ -88,14 +89,15 @@ namespace WebApi.Repositories
                 {
                     return connection.Query<Product>(
                         "SELECT * FROM Products WHERE @CategoryID IS NULL OR CategoryID=@CategoryID;",
-                        new { CategoryID = filters?.CategoryID }
+                        new { filters?.CategoryID }
                     )
                         .ToList();
                 }
 
                 return connection.Query<Product>(
                     "SELECT * FROM Products WHERE (@CategoryID IS NULL OR CategoryID=@CategoryID) " +
-                    "ORDER BY ProductID " +                    "OFFSET (@PageNumber - 1) * @PageSize ROWS " +
+                    "ORDER BY ProductID " +
+                    "OFFSET (@PageNumber - 1) * @PageSize ROWS " +
                     "FETCH NEXT @PageSize ROWS ONLY;",
                     new {
                         filters?.CategoryID,

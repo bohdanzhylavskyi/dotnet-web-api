@@ -1,16 +1,14 @@
-﻿using System.Net.Http.Json;
-using System.Text.Json;
-using WebApi.Entities;
+﻿using System.Text.Json;
 
 namespace ConsoleApp.Operations
 {
     public class ListCategoriesOperation: IOperation
     {
-        private HttpClient httpClient;
+        private ApiClient apiClient;
 
-        public ListCategoriesOperation(HttpClient httpClient)
+        public ListCategoriesOperation(ApiClient apiClient)
         {
-            this.httpClient = httpClient;
+            this.apiClient = apiClient;
         }
 
         public string GetName()
@@ -20,18 +18,12 @@ namespace ConsoleApp.Operations
 
         public async Task Execute()
         {
-            var categories = await GetCategoriesList();
+            var categories = await this.apiClient.GetCategoriesListAsync();
 
             Console.WriteLine("\nResult:");
             Console.WriteLine(
                 JsonSerializer.Serialize(categories, new JsonSerializerOptions() { WriteIndented = true})
             );
         }
-
-        private async Task<List<Category>> GetCategoriesList()
-        {
-            return await this.httpClient.GetFromJsonAsync<List<Category>>($"categories");
-        }
-
     }
 }

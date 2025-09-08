@@ -1,19 +1,17 @@
-﻿using System.Text.Json;
-
-namespace ConsoleApp.Operations
+﻿namespace ConsoleApp.Operations
 {
-    public class GetCategoryByIdOperation: IOperation
+    public class DeleteCategoryByIdOperation: IOperation
     {
         private ApiClient apiClient;
 
-        public GetCategoryByIdOperation(ApiClient apiClient)
+        public DeleteCategoryByIdOperation(ApiClient apiClient)
         {
             this.apiClient = apiClient;
         }
 
         public string GetName()
         {
-            return "Get Category By Id";
+            return "Delete Category By Id";
         }
 
         public async Task Execute()
@@ -26,9 +24,9 @@ namespace ConsoleApp.Operations
                 return;
             }
 
-            var category = await this.apiClient.GetCategoryByIdAsync((int) categoryId);
+            await this.apiClient.DeleteCategoryByIdAsync((int) categoryId);
 
-            Console.WriteLine($"\nResult: {JsonSerializer.Serialize(category)}");
+            Console.WriteLine($"\nCategory was deleted");
         }
     }
 }
